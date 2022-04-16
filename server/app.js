@@ -16,13 +16,15 @@ server.listen(process.env.PORT || 8000, () => {
 });
 
 io.on("connection", (socket) => {
-  console.log("WE GOT USER", socket.id);
   socket.on("pointer", (e) => {
     socket.broadcast.emit(`pointer`, { ...e, socketId: socket.id });
   });
 
+  socket.on("map_changed", (e) => {
+    socket.broadcast.emit("on_map_changed", e);
+  });
+
   socket.on("disconnecting", (reason) => {
-    console.log("LEAVING....", socket.id);
     socket.broadcast.emit("pointer_left", socket.id);
   });
   socket.on("disconnect", (e) => {

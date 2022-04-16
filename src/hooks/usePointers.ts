@@ -12,12 +12,14 @@ export const usePointers = () => {
 
   const { getId } = useId();
 
+  const emoji = useStore((state) => state.emoji);
+
   useEffect(() => {
     let id = getId();
     document.addEventListener("mousemove", (e) => {
       // update users positions
       socket.emit("pointer", {
-        emoji: "🤩",
+        emoji,
         x: e.pageX,
         y: e.pageY,
         id,

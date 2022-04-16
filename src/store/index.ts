@@ -7,9 +7,15 @@ interface State {
   updatePointer: (id: string, cord: Emoji) => void;
 
   deletePointer: (id: Emoji["socketId"]) => void;
+
+  emoji: string;
+
+  setEmoji: (e: string) => void;
 }
 
 export const useStore = create<State>((set) => ({
+  emoji: "",
+  setEmoji: (e) => set((state) => ({ emoji: e })),
   pointers: {},
   updatePointer: (id, cords) =>
     set((state) => ({ pointers: { ...state.pointers, [id]: cords } })),
