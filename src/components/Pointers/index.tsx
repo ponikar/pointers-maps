@@ -41,7 +41,7 @@ export const Pointers = () => {
   return (
     <div className="w-full h-screen left-0 right-0 fixed">
       <GoogleMapReact
-        bootstrapURLKeys={{ key: import.meta.env.GOOGLE_API_MAP_KEY }}
+        bootstrapURLKeys={{ key: import.meta.env.VITE_GOOGLE_API_MAP_KEY }}
         defaultCenter={defaultProps.center}
         defaultZoom={defaultProps.zoom}
         zoom={mapOptions.zoom}
