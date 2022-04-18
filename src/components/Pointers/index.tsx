@@ -20,7 +20,9 @@ const defaultProps = {
 export const Pointers = () => {
   usePointers();
   const [mapOptions, setMapOptions] = useState(defaultProps);
+  const setTempSelectedCords = useStore((state) => state.setTempSelectedCords);
 
+  const markedLocations = useStore((state) => state.markedLocations);
   useEffect(() => {
     if (window.navigator) {
       window.navigator.geolocation.getCurrentPosition((e) => {
@@ -39,20 +41,23 @@ export const Pointers = () => {
   return (
     <div className="w-full h-screen left-0 right-0 fixed">
       <GoogleMapReact
-        bootstrapURLKeys={{ key: "" }}
+        bootstrapURLKeys={{ key: "AIzaSyAURnBiV0RFUhF4hb-347NBeIoyUln8vMw" }}
         defaultCenter={defaultProps.center}
         defaultZoom={defaultProps.zoom}
         zoom={mapOptions.zoom}
         center={mapOptions.center}
         yesIWantToUseGoogleMapApiInternals
-        onClick={(e) => console.log("YOU CLICKED ON", e)}
+        onClick={(e) => setTempSelectedCords({ lat: e.lat, lng: e.lng })}
         onChange={({ center, zoom }) => onMapCredChange({ center, zoom })}
       >
-        <Marker
-          lat={mapOptions.center.lat}
-          lng={mapOptions.center.lng}
-          text="MARKER"
-        />
+        {markedLocations.map((location) => (
+          <Marker
+            lat={location.map.lat}
+            lng={location.map.lng}
+            key={location.id}
+            {...location}
+          />
+        ))}
       </GoogleMapReact>
       {Object.keys(pointers)
         .map((k) => pointers[k])

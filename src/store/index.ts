@@ -1,5 +1,5 @@
 import create from "zustand";
-import { Emoji, PointersState } from "../@types";
+import { Emoji, LocationType, PointersState } from "../@types";
 import _omit from "lodash/omit";
 interface State {
   pointers: PointersState["pointers"];
@@ -11,6 +11,15 @@ interface State {
   emoji: string;
 
   setEmoji: (e: string) => void;
+  tempSelectedCords: {
+    lng: number | null;
+    lat: number | null;
+  };
+  setTempSelectedCords: (e: State["tempSelectedCords"]) => void;
+
+  markedLocations: LocationType[];
+
+  addMarkedLocation: (e: LocationType) => void;
 }
 
 export const useStore = create<State>((set) => ({
@@ -41,4 +50,13 @@ export const useStore = create<State>((set) => ({
 
       return { pointers };
     }),
+
+  tempSelectedCords: {
+    lat: null,
+    lng: null,
+  },
+  setTempSelectedCords: (e) => set({ tempSelectedCords: e }),
+  markedLocations: [],
+  addMarkedLocation: (location) =>
+    set((state) => ({ markedLocations: [...state.markedLocations, location] })),
 }));

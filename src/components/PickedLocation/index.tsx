@@ -1,7 +1,9 @@
 import { Box, Card, Divider, Text } from "@mantine/core";
 import React from "react";
+import { useStore } from "../../store";
 import { Location } from "./PickedLocation";
 export const PickedLocations = () => {
+  const locations = useStore((state) => state.markedLocations);
   return (
     <div
       style={{ border: "1px solid #dedede" }}
@@ -18,11 +20,9 @@ export const PickedLocations = () => {
         className="h-[95%] mt-3"
       >
         <section className="overflow-y-auto max-h-full">
-          {Array(2)
-            .fill(0)
-            .map((s, index) => (
-              <Location key={index} />
-            ))}
+          {locations.map((location) => (
+            <Location id={location.id} {...location} />
+          ))}
         </section>
       </div>
     </div>

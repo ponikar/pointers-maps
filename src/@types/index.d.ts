@@ -10,3 +10,22 @@ export interface Emoji {
 
   socketId: string;
 }
+
+export interface LocationType {
+  id?: string;
+  plan_title: string;
+  marker: string;
+  date: string;
+
+  map: {
+    lng: number;
+    lat: number;
+  };
+  duration: string;
+  comment?: string;
+}
+
+export type NewLocation = Pick<
+  LocationType,
+  Exclude<keyof LocationType, "id" | "map">
+>;
