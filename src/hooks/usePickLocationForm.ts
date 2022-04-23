@@ -1,6 +1,7 @@
 import { useForm } from "@mantine/form";
 import { nanoid } from "nanoid";
 import React from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { NewLocation } from "../@types";
 import { useStore } from "../store";
 
@@ -13,8 +14,10 @@ const DEFAULT_STATE: NewLocation = {
 };
 export const usePickLocationForm = () => {
   const addMarkedLocation = useStore((state) => state.addMarkedLocation);
-  const setTempSelectedCords = useStore((state) => state.setTempSelectedCords);
-  const tempSelectedCords = useStore((state) => state.tempSelectedCords);
+
+  const [searchParam] = useSearchParams();
+  const navigateTo = useNavigate();
+
   const { getInputProps, ...form } = useForm({
     initialValues: DEFAULT_STATE,
     validate: {
@@ -25,17 +28,16 @@ export const usePickLocationForm = () => {
   });
   const onFormSubmit: React.FormEventHandler = (e) => {
     e.preventDefault();
-    if (
-      !form.validate().hasErrors &&
-      tempSelectedCords.lng &&
-      tempSelectedCords.lng
-    ) {
+    if (!form.validate().hasErrors) {
       addMarkedLocation({
         ...form.values,
         id: nanoid().toString(),
-        map: tempSelectedCords,
+        map: {
+          lat: Number(searchParam.get("lat")),
+          lng: Number(searchParam.get("lng")),
+        },
       });
-      setTempSelectedCords({ lng: null, lat: null });
+      navigateTo("/map");
     }
   };
 

@@ -1,33 +1,53 @@
 import { Button, Header, Modal, Text } from "@mantine/core";
 import React, { FC } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { useStore } from "../../store";
 
 export const LocationInfo = () => {
+  const { id } = useParams<{ id: string }>();
+  const navigateTo = useNavigate();
+
+  const location = useStore(
+    (state) => state.markedLocations.filter((loc) => loc.id === id)[0]
+  );
+
+  console.log("LOC", location);
   return (
     <Modal
-      title={<h2 className="text-2xl">Header</h2>}
+      title={<h2 className="text-2xl">{location.plan_title}</h2>}
       opened
-      onClose={() => console.log("w")}
+      onClose={() => navigateTo("/map")}
     >
       <section className="flex flex-col gap-3">
         <div>
           <PropTitle>Marker</PropTitle>
-          <PropBody>P</PropBody>
+          <PropBody>
+            <p className="text-2xl">{location.marker}</p>
+          </PropBody>
         </div>
         <div>
           <PropTitle>Picked By</PropTitle>
           <PropBody>Darshan Ponikar</PropBody>
         </div>
         <div>
-          <PropTitle>Date & Time</PropTitle>
-          <PropBody>22nd Jan, 2021, 12:00 to 01:00</PropBody>
+          <PropTitle>Date</PropTitle>
+          <PropBody>{new Date(location.date).toLocaleDateString()}</PropBody>
         </div>
+
         <div>
-          <PropTitle>Comment</PropTitle>
+          <PropTitle>Time Duration</PropTitle>
           <PropBody>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim
-            recusandae, assumenda pariatur, quam necessitatibus quia repr
+            {new Date(location.duration[0]).toLocaleTimeString()} To{" "}
+            {new Date(location.duration[1]).toLocaleTimeString()}
           </PropBody>
         </div>
+
+        {location.comment && (
+          <div>
+            <PropTitle>Comment</PropTitle>
+            <PropBody>{location.comment}</PropBody>
+          </div>
+        )}
 
         <section className="flex gap-1 justify-end">
           <Button color="dark" variant="white">

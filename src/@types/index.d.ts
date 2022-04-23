@@ -65,6 +65,8 @@ export interface State {
   markedLocations: LocationType[];
 
   addMarkedLocation: (e: LocationType) => void;
+
+  deleteMarkedLocation: (e: LocationType["id"]) => void;
 }
 
 export type StateSlice<K extends keyof State> = StateCreator<Pick<State, K>>;

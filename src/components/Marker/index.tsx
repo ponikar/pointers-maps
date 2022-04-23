@@ -1,5 +1,6 @@
 import { Tooltip } from "@mantine/core";
 import React, { FC } from "react";
+import { Link } from "react-router-dom";
 import { LocationType } from "../../@types";
 import { greatPlaceStyle } from "./marker-style";
 
@@ -9,7 +10,7 @@ interface MarkerProps extends LocationType {
 }
 export const Marker: FC<MarkerProps> = (props) => {
   return (
-    <button className="cursor-pointer" onClick={() => console.log("sdsd")}>
+    <Link className="cursor-pointer" to={`/map/location/${props.id}`}>
       <Tooltip
         style={greatPlaceStyle}
         withArrow
@@ -19,6 +20,6 @@ export const Marker: FC<MarkerProps> = (props) => {
       >
         {props.marker}
       </Tooltip>
-    </button>
+    </Link>
   );
 };

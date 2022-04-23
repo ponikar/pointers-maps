@@ -3,9 +3,11 @@ import { FC } from "react";
 import { Maximize, Trash, Trash2, X } from "react-feather";
 import { LocationType } from "../../@types";
 import { useMutateMapOptions } from "../../hooks/useMapOptions";
+import { useMutateLocations } from "../../store/locations";
 
 export const Location: FC<LocationType> = (props) => {
   const updateMapOptions = useMutateMapOptions();
+  const { deleteMarkedLocation } = useMutateLocations();
   return (
     <div
       role="button"
@@ -26,7 +28,11 @@ export const Location: FC<LocationType> = (props) => {
 
       <Box className="ml-auto items-center flex gap-4">
         <Maximize className="cursor-pointer" size={18} />
-        <X size={20} className="cursor-pointer" />
+        <X
+          onClick={() => deleteMarkedLocation(props.id)}
+          size={20}
+          className="cursor-pointer"
+        />
       </Box>
     </div>
   );

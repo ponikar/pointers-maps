@@ -9,15 +9,15 @@ import {
 import { DatePicker, TimeRangeInput } from "@mantine/dates";
 
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { usePickLocationForm } from "../../hooks/usePickLocationForm";
-import { useStore } from "../../store";
 import { PickMarker } from "../PickMarker";
 
 export const SelectLocation = () => {
   const { onFormSubmit, getInputProps, ...form } = usePickLocationForm();
   const [showMarkers, setShowMarkers] = useState(false);
+  const navigateTo = useNavigate();
 
-  const setTempSelectedCords = useStore((state) => state.setTempSelectedCords);
   const hideMarkers = () => {
     setShowMarkers(false);
   };
@@ -36,7 +36,7 @@ export const SelectLocation = () => {
     <Modal
       title="Plan your Next Adventure!"
       opened
-      onClose={() => setTempSelectedCords({ lat: null, lng: null })}
+      onClose={() => navigateTo("/map")}
     >
       <form onSubmit={onFormSubmit}>
         <InputWrapper label="What's your Plan?">

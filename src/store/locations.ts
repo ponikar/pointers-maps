@@ -2,19 +2,15 @@ import { useStore } from ".";
 import { State, StateSlice } from "../@types";
 
 export const locationState: StateSlice<
-  | "tempSelectedCords"
-  | "setTempSelectedCords"
-  | "markedLocations"
-  | "addMarkedLocation"
+  "markedLocations" | "addMarkedLocation" | "deleteMarkedLocation"
 > = (set) => ({
-  tempSelectedCords: {
-    lat: null,
-    lng: null,
-  },
-  setTempSelectedCords: (e) => set({ tempSelectedCords: e }),
   markedLocations: [],
   addMarkedLocation: (location) =>
     set((state) => ({ markedLocations: [...state.markedLocations, location] })),
+  deleteMarkedLocation: (id) =>
+    set((state) => ({
+      markedLocations: state.markedLocations.filter((loc) => loc.id !== id),
+    })),
 });
 
 export const useTempSelectedCords = () => {
@@ -27,7 +23,7 @@ export const useMarkedLocation = () => {
 
 export const useMutateLocations = () => {
   return useStore((state) => ({
-    setTempSelectedCords: state.setTempSelectedCords,
     addMarkedLocation: state.addMarkedLocation,
+    deleteMarkedLocation: state.deleteMarkedLocation,
   }));
 };
