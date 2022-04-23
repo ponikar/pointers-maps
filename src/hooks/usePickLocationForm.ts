@@ -25,8 +25,11 @@ export const usePickLocationForm = () => {
   });
   const onFormSubmit: React.FormEventHandler = (e) => {
     e.preventDefault();
-    form.validate();
-    if (tempSelectedCords.lat && tempSelectedCords.lng) {
+    if (
+      !form.validate().hasErrors &&
+      tempSelectedCords.lng &&
+      tempSelectedCords.lng
+    ) {
       addMarkedLocation({
         ...form.values,
         id: nanoid().toString(),

@@ -14,11 +14,3 @@ export const mapOptionsState: StateSlice<"mapOptions" | "updateOptions"> = (
   updateOptions: (options) =>
     set((state) => ({ mapOptions: { ...state.mapOptions, ...options } })),
 });
-
-export const useMapOptions = () => {
-  return useStore((state) => state.mapOptions);
-};
-
-export const useMutateMapOptions = () => {
-  return useStore((state) => state.updateOptions);
-};

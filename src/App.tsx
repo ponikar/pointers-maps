@@ -1,4 +1,7 @@
 import "./App.css";
+import { LocationInfo } from "./components/LocationInfo";
+import { Map } from "./components/Map";
+import { MapFeature } from "./components/Map/MapFeature";
 import { PickEmoji } from "./components/PickEmoji";
 import { Pointers } from "./components/Pointers";
 import { SelectLocation } from "./components/SelectLocation";
@@ -13,7 +16,9 @@ function App() {
       ) : (
         <>
           <Pointers />
-          {tempSelectedCords.lat && tempSelectedCords.lng && <SelectLocation />}
+          {tempSelectedCords.lat && tempSelectedCords.lng && <SelectLocation />} */}
+           <Map />
+          <MapFeature />
         </>
       )}
     </>

@@ -9,14 +9,16 @@ interface MarkerProps extends LocationType {
 }
 export const Marker: FC<MarkerProps> = (props) => {
   return (
-    <Tooltip
-      style={greatPlaceStyle}
-      withArrow
-      radius="lg"
-      arrowSize={5}
-      label={props.plan_title}
-    >
-      {props.marker}
-    </Tooltip>
+    <button className="cursor-pointer" onClick={() => console.log("sdsd")}>
+      <Tooltip
+        style={greatPlaceStyle}
+        withArrow
+        radius="lg"
+        arrowSize={5}
+        label={props.plan_title}
+      >
+        {props.marker}
+      </Tooltip>
+    </button>
   );
 };
