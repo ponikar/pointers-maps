@@ -3,6 +3,9 @@ const express = require("express");
 const http = require("http");
 const app = express();
 
+app.get("/testing", (req, res) => {
+  return res.json({ message: "Working!" });
+});
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
